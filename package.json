@@ -1,0 +1,110 @@
+{
+  "name": "branch-warning",
+  "displayName": "Branch Warning",
+  "description": "Permanent staging provenance warnings and view-only branch reminders in the VS Code status bar.",
+  "version": "0.1.2",
+  "publisher": "branch-warning-local",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "SCM Providers",
+    "Other"
+  ],
+  "keywords": [
+    "git",
+    "branch",
+    "staging",
+    "warning"
+  ],
+  "main": "./src/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "extensionDependencies": [
+    "vscode.git"
+  ],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": false,
+      "description": "Reads local Git metadata and runs read-only Git commands."
+    },
+    "virtualWorkspaces": false
+  },
+  "scripts": {
+    "test": "node test/run.js",
+    "check": "node --check src/extension.js && node --check src/git.js && node --check src/tracker.js && node --check src/presentation.js && node --check src/storage.js",
+    "test:host": "node scripts/test-host.js",
+    "package": "vsce package --no-dependencies --allow-missing-repository --skip-license --out branch-warning-0.1.2.vsix"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "branchWarning.refresh",
+        "title": "Branch Warning: Refresh Indicator"
+      },
+      {
+        "command": "branchWarning.openSettings",
+        "title": "Branch Warning: Open Project Settings"
+      },
+      {
+        "command": "branchWarning.showOutput",
+        "title": "Branch Warning: Show Activity Log"
+      }
+    ],
+    "configuration": {
+      "title": "Branch Warning",
+      "properties": {
+        "branchWarning.enabled": {
+          "type": "boolean",
+          "default": true,
+          "scope": "resource",
+          "description": "Show branch warnings and monitor new Git activity while this VS Code window is open. Existing permanent warnings are retained when disabled."
+        },
+        "branchWarning.forbiddenBranches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true,
+          "default": [
+            "staging"
+          ],
+          "scope": "resource",
+          "description": "Exact forbidden base branch names. Creating a branch from one, merging one, or rebasing onto one permanently flags the feature branch. Named remote refs such as origin/staging are recognized too."
+        },
+        "branchWarning.viewOnlyBranches": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true,
+          "default": [
+            "dev",
+            "main"
+          ],
+          "scope": "resource",
+          "description": "Exact branch names that show the same amber view-only reminder. This is a visual reminder; commits and merges remain available."
+        },
+        "branchWarning.pollIntervalMs": {
+          "type": "integer",
+          "default": 1000,
+          "minimum": 500,
+          "maximum": 30000,
+          "scope": "resource",
+          "description": "Milliseconds between checks for Git activity from VS Code, terminals, and other Git apps."
+        }
+      }
+    }
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^3.0.0"
+  },
+  "extensionKind": [
+    "workspace"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "vscode": "1.144.0",
+  "checks": [
+    "activation",
+    "amber dev shown",
+    "normal branch indicator hidden",
+    "detached HEAD indicator hidden",
+    "red staging provenance shown",
+    "warning visibility transitions",
+    "reset permanence",
+    "inheritance",
+    "disable and offline baseline",
+    "saved warning restoration",
+    "commands",
+    "saved warnings survive an actual VS Code process restart",
+    "closed-editor activity excluded after restart"
+  ],
+  "screenshots": [
+    "view-only.png",
+    "normal.png",
+    "permanent-warning.png"
+  ]
+}

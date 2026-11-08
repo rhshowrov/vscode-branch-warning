@@ -1,0 +1,11 @@
+.vscode/**
+test/**
+scripts/**
+node_modules/**
+package-lock.json
+*.vsix
+*.log
+mockup.png
+.gitignore
+verification/**
+VERIFICATION.md
